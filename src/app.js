@@ -25,6 +25,7 @@ const listNavLink = document.querySelectorAll('.nav-link');
 const code = document.querySelector('.code');
 
 code.innerHTML = texts.text1;
+handleDateCalcFormListener();
 
 function clickHandler(event) {
     changeText(event);
@@ -38,14 +39,18 @@ function changeActiveClass(event) {
 
 function changeText(event) {
     if (event.target.textContent == 'Калькулятор дат') {
-        code.innerHTML = texts.text1;
-        const dateCalcForm = document.getElementById("datecalc");
-        dateCalcForm.addEventListener("submit", handleCalcDates);
+        handleDateCalcFormListener();
     } else {
         code.innerHTML = texts.text2;
         const timerForm = document.getElementById("timer");
         timerForm.addEventListener("submit", handleTimer);
     }
+}
+
+function handleDateCalcFormListener() {
+    code.innerHTML = texts.text1;
+    const dateCalcForm = document.getElementById("datecalc");
+    dateCalcForm.addEventListener("submit", handleCalcDates);
 }
 
 listNavLink.forEach(item => {

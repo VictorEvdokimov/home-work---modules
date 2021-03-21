@@ -19,30 +19,32 @@ export function handleCalcDates(event) {
 
 export function handleTimer(event) {
     const buttonTimer = document.querySelector('.buttonTimer');
-    const timerResult = document.getElementById("timer__result");
-    timerResult.innerHTML = "";
+    const timerResult = document.getElementById('timer__result');
+    
     event.preventDefault();
     if( buttonTimer.textContent === 'Стоп' ) {
+        timerResult.innerHTML = '';
         clearInterval(timer);
         buttonTimer.textContent = 'Старт';
     } else {
         let { seconds } = event.target.elements;
         let count = seconds.value;
         if ((count != null) && (count > 0)) {
-            seconds.value = "";
+            timerResult.innerHTML = count;
             buttonTimer.textContent = "Стоп";
-            timer = setInterval(() => {
-                if (count >= 0) {
-                    timerResult.innerHTML = count--;
-               } else {
-                    clearInterval(timer);
-                    let audio = new Audio('../notification.mp3');
-                    audio.play();
-               }
-           }, 1000);
+           
+                timer = setInterval(() => {
+                    if (count >= 0) {
+                        timerResult.innerHTML = count--;
+                   } else {
+                        clearInterval(timer);
+                        let audio = new Audio('notification.mp3');
+                        timerResult.innerHTML = '';
+                        buttonTimer.textContent = 'Старт'
+                        seconds.value = '';
+                        audio.play();
+                   }
+               }, 1000);
         }    
     }    
 }
-
-
-

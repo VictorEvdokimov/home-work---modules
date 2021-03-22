@@ -1,26 +1,17 @@
-import { formatError } from "./utils.js";
-import { diffDates, diffToHtml } from "./datecalc.js";
+const template = `
+<form id="timer">
+    <h3>Таймер</h3>
+    <input type="number" name="seconds" placeholder="секунды">
+    <button class="buttonTimer">Старт</button>
+    <p id="timer__result"></p>
+</form>
+`;
 
-let timer = 0;
-
-export function handleCalcDates(event) {
-    const dateCalcResult = document.getElementById("datecalc__result");
-    dateCalcResult.innerHTML = "";
-    event.preventDefault();
-
-    let { firstDate, secondDate } = event.target.elements;
-    firstDate = firstDate.value, secondDate = secondDate.value;
-
-    if (firstDate && secondDate) {
-        const diff = diffDates(firstDate, secondDate);
-        dateCalcResult.innerHTML = diffToHtml(diff);
-    } else dateCalcResult.innerHTML = formatError("Для расчета промежутка необходимо заполнить оба поля");
-}
-
-export function handleTimer(event) {
+function handleTimer(event) {
     const buttonTimer = document.querySelector('.buttonTimer');
     const timerResult = document.getElementById('timer__result');
-    
+    let timer = 0;
+
     event.preventDefault();
     if( buttonTimer.textContent === 'Стоп' ) {
         timerResult.innerHTML = '';
@@ -48,3 +39,11 @@ export function handleTimer(event) {
         }    
     }    
 }
+
+function showForm(rootNode) {
+    rootNode.innerHTML = template;
+    const timerForm = document.getElementById("timer");
+    timerForm.addEventListener("submit", handleTimer);
+}
+
+export default { showForm };
